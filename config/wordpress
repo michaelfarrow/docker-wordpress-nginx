@@ -1,21 +1,25 @@
 server {
-    client_max_body_size 20M;
-    listen 80 default_server;
+	client_max_body_size 20M;
+	listen 80 default_server;
 
-    root /data/www/public;
-    index index.php index.html index.htm;
+	root /data/www/public;
+	index index.php index.html index.htm;
 
-    location / {
-    	try_files $uri $uri/ /index.html /index.php?$query_string;
-    }
+	location / {
+		try_files $uri $uri/ /index.html /index.php?$query_string;
+	}
 
-    location ~ \.php$ {
-    	include fastcgi_params;
-        fastcgi_pass phpfpm_backend;
-        fastcgi_param SCRIPT_FILENAME $request_filename;
-    }
+	location ~ \.php$ {
+		include fastcgi_params;
+		fastcgi_pass phpfpm_backend;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+	}
 
-    location ~ /\.ht {
-    	deny all;
-    }
+	location ~ /\.ht {
+		deny all;
+	}
+
+	location /app/uploads {
+		alias /storage/uploads;
+	}
 }
